@@ -95,7 +95,7 @@ const Weather = () => {
         <div className="p-10  border rounded-md  border-none" >
 
             <div className="flex items-center ">
-                <input type="text" placeholder='Search' className="border border-none pl-3 outline-none rounded-[200px] p-2" onKeyDown={getWeather} onChange={inputCity} />
+                <input type="text" placeholder='Search' className="border border-none pl-3 outline-none rounded-[200px] p-2 w-64" onKeyDown={getWeather} onChange={inputCity} />
                 <button onClick={getWeather}><FontAwesomeIcon className="text-gray-600 ml-3 p-3 bg-white rounded-full " icon={faMagnifyingGlass}></FontAwesomeIcon></button>
             </div>
             {weather ? <div>
@@ -120,7 +120,7 @@ const Weather = () => {
                             <img src={wind_icon} alt="" className="w-8" />
                             <div>
                                 <p className="text-blue-500">{weather.wind} Km/h</p>
-                                <p className="text-blue-400">Wind Speed</p>
+                                <p className="text-blue-500">Wind Speed</p>
                             </div>
 
                         </div>
