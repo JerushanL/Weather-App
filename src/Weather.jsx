@@ -28,9 +28,9 @@ import axios from 'axios'
 
 const Weather = () => {
 
-    const[city,setCity]= useState("Laval")
-    const[weather,setWeather] = useState(false)
-    const allIcons ={
+    const [city, setCity] = useState("")
+    const [weather, setWeather] = useState(false)
+    const allIcons = {
         "01d": clearD,
         "01n": clearN,
         "02d": fewCloudsD,
@@ -51,36 +51,36 @@ const Weather = () => {
         "50n": mistN
 
     }
-    const capitalizeFirsrLetter = (string)=>{
+    const capitalizeFirsrLetter = (string) => {
         return string.charAt(0).toUpperCase() + string.slice(1)
     }
 
-    function inputCity(event){
+    function inputCity(event) {
         setCity(event.target.value)
     }
 
     function getWeather(event) {
-        if(event.type === "click" || (event.type === "keydown" && event.key === "Enter")){
-            if (city === ""){
+        if (event.type === "click" || (event.type === "keydown" && event.key === "Enter")) {
+            if (city === "") {
                 alert("Please Enter a City Name.")
             }
             var weatherData = axios(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=94c40770116e29c4dc537b2b2522c514`)
             weatherData.then((result) => {
                 console.log(result.data)
                 const weatherIcon = allIcons[result.data.weather[0].icon]
-                
-               
+
+
                 setWeather({
-                    humidity:  result.data.main.humidity,
-                    wind :  result.data.wind.speed,
+                    humidity: result.data.main.humidity,
+                    wind: result.data.wind.speed,
                     location: result.data.name,
                     temperature: Math.floor(result.data.main.temp),
                     feels_like: Math.floor(result.data.main.feels_like),
                     icon: weatherIcon,
                     description: capitalizeFirsrLetter(result.data.weather[0].description)
-    
+
                 })
-    
+
                 console.log(weather)
             }).catch((err) => {
                 console.log(err)
@@ -90,9 +90,9 @@ const Weather = () => {
         }
 
     }
-    // #227bf4,#ebf5bf  bg-gradient-to-t from-[#ebf5bf] to-[#227bf4]
+ 
     return (
-        <div className="p-10  bg-gradient-to-br from-[#f7e6cf] to-[#fdb569] border rounded-md  border-none" > 
+        <div className="p-10  border rounded-md  border-none" >
 
             <div className="flex items-center ">
                 <input type="text" placeholder='Search' className="border border-none pl-3 outline-none rounded-[200px] p-2" onKeyDown={getWeather} onChange={inputCity} />
@@ -100,35 +100,35 @@ const Weather = () => {
             </div>
             {weather ? <div>
                 <div className="text-center">
-                <img src={weather.icon} alt="" className="w-32 mx-auto my-3" />
-                <p className="text-2xl text-orange-800 -mt-6 mb-4">{weather.description}</p>
-                <p className="text-6xl text-orange-500 ">{weather.temperature}°C</p>
-                <p className="text-2xl text-orange-800
+                    <img src={weather.icon} alt="" className="w-32 mx-auto my-3" />
+                    <p className="text-2xl text-orange-800 -mt-6 mb-4">{weather.description}</p>
+                    <p className="text-6xl text-orange-500 ">{weather.temperature}°C</p>
+                    <p className="text-2xl text-orange-800
                  my-3">Feels Like {weather.feels_like}°C</p>
-                
-                <p className="text-orange-800 text-5xl font-semibold mt-2">{weather.location}</p>
 
-                <div className="flex items-center justify-between gap-12 mt-12">
-                    <div className="flex items-center gap-2">
-                        <img src={humidity_icon} alt="" className="w-8" />
-                        <div>
-                            <p className="text-blue-500">{weather.humidity}%</p>
-                            <p className="text-blue-500">Humidity</p>
+                    <p className="text-orange-800 text-5xl font-semibold mt-2">{weather.location}</p>
+
+                    <div className="flex items-center justify-between gap-12 mt-12">
+                        <div className="flex items-center gap-2">
+                            <img src={humidity_icon} alt="" className="w-8" />
+                            <div>
+                                <p className="text-blue-500">{weather.humidity}%</p>
+                                <p className="text-blue-500">Humidity</p>
+                            </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <img src={wind_icon} alt="" className="w-8" />
+                            <div>
+                                <p className="text-blue-500">{weather.wind} Km/h</p>
+                                <p className="text-blue-400">Wind Speed</p>
+                            </div>
+
                         </div>
                     </div>
-                    <div className="flex items-center gap-2">
-                        <img src={wind_icon}   alt="" className="w-8" />
-                        <div>
-                            <p className="text-blue-500">{weather.wind} Km/h</p>
-                            <p className="text-blue-400">Wind Speed</p>
-                        </div>
 
-                    </div>
                 </div>
+            </div> : <div></div>}
 
-            </div>
-            </div> : <div></div> }
-            
 
         </div>
     )
